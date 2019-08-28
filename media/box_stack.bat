@@ -1,0 +1,1 @@
+montage box[1-6].png -tile 6x1 -geometry +0+0 box_1.png

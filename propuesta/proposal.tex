@@ -1,0 +1,248 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            pdftitle={Final Project Proposal},
+            pdfauthor={Nisim Hurst},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Final Project Proposal}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+\subtitle{A price elasticity-based LSTM prediction model}
+  \author{\href{mailto:langheran@gmail.com}{Nisim Hurst}}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{Wednesday 25 April 2018}
+
+\usepackage{float} \usepackage{caption}
+\makeatletter\renewcommand*{\fps@figure}{H}\makeatother
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+\begin{document}
+\maketitle
+
+\textbf{Profesor:} \href{mailto:vallejo@itesm.mx}{Edgar Emmanuel Vallejo
+Clemente}
+
+\textbf{Team Members:} \href{mailto:A01012491@itesm.mx}{Nisim Hurst,
+A01012491}
+
+\subsection{Problem description}\label{problem-description}
+
+Densely connected simple neural networks are good when the i.d.d.
+(independent and identically distributed) assumption holds on the sample
+data. However, data that is correlated in time or space is a bit
+trickier to treat.
+
+One example of these kind of task is when you try to predict product
+sell quantities from price. Right price strategies are difficult to
+predict because most of the product are subject to behavioral economics
+variables like the
+\href{https://en.wikipedia.org/wiki/Veblen_good}{Veblen Effect} or
+changes in demographics that are outside of the scope of the data.
+
+Price elasticity models are usually designed by a human and optimized by
+a machine, but nowadays these models are falling short behind the
+velocity of global economic changes. Thus, we propose a machine
+learning-based method that could cope with those changes.
+
+Namely, we would like to estimate units sold using a learned price
+elasticity model.
+
+\subsection{Solution proposal}\label{solution-proposal}
+
+Hidden Markov models fail to capture long term relationships between the
+data because of the Markov assumption that a future state is only
+dependent of the immediately previous state. Also, on Markov chains you
+have to find a way to compress the whole problem into one variable only.
+
+Thus, we propose will try out a long short-term memory recurrent neural
+network to be able to capture relationships that go over 1 year long.
+
+\subsection{Dataset description}\label{dataset-description}
+
+The proposed dataset was proposed by Dr.~Laura Hervert on and is
+currently being used on the Research Methods class:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Dimensions.} 78578 samples, 15 features, 1030 unique sku
+  (sequences), 70 categories. About 14 sku ssales sequences per
+  category. The data is spread out evenly over a period of roughly 2.5
+  years, i.e.~missing data over the sequences are trifling.
+\item
+  \textbf{Variables.} sku, category (subjective), time (week precision),
+  prices, cost, units sold, temperature ranges, rain and whether or not
+  the sku had a promotion.
+\item
+  \textbf{Description.} Here is a description taken from the original
+  dataset page:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Category- Classification for things regarded as having particular
+    shared characteristics
+  \item
+    SKU -- Products
+  \item
+    Year -- Year in which the sale occurred
+  \item
+    Week -- Week of the year in which the sale occurred
+  \item
+    System price -- Price in the information system of the company at
+    the time of sale
+  \item
+    Competitor's price - Price of the principal competitor's at the time
+    of sale
+  \item
+    Net cost - Cost of the product without considering the profit margin
+  \item
+    Units -- Sold units during the week
+  \item
+    Sales amount - Income obtained from the sales during the week
+  \item
+    Real price - Income obtained from the sale divided by the sold units
+  \item
+    Min temp - Minimum temperature recorded in the week of sale
+  \item
+    Avg temp - Average temperature recorded in the week of sale
+  \item
+    Max temp - Maximun temperature recorded in the week of sale
+  \item
+    Rain intensity -- Scale to define the intensity of the rain during
+    the week of sale
+  \item
+    Promotion -- Binary value 1- for a sale with a promotion involved 0
+    -- for a regular sale.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Questions to answer}\label{questions-to-answer}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Can this dataset be used to train a recurrent neural network
+  that produces over 60\% accuracy on the predicted 1 month horizon?} Is
+  the data sufficient? are there any bayes error bounds implicit in the
+  data?
+\item
+  \textbf{How similar products sales relate to the data?} can we use
+  data of one product category (human labeled) and use it to predict the
+  units sold of another category? can we use a kind of transfer learning
+  from other pre-trained datasets?
+\item
+  \textbf{Is there any seasonality for some products?} are there any
+  periodic elements that would affect the units sold regardless of the
+  other variables.
+\item
+  \textbf{How elastic are the products?} how changes in prices and other
+  ancillary variables affect the units sold.
+\end{enumerate}
+
+\subsection{Additional comments}\label{additional-comments}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Some holyday weekends have no data, we could use a connect-the-dots
+  technique or weighted moving average on those days for completing the
+  information cube.
+\end{enumerate}
+
+
+\end{document}

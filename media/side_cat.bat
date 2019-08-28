@@ -1,0 +1,1 @@
+montage res2.png learning_curve_category.png -tile 2x1 -geometry +0+0 side_cat.png

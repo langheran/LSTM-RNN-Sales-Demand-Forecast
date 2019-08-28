@@ -1,0 +1,1 @@
+Rscript -e "rmarkdown::render('P1.Rmd', encoding = 'UTF-8', output_file = 'P1.pdf');"

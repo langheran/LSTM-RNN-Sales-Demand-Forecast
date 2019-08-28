@@ -1,0 +1,1 @@
+montage predict_all.png pred_1prod.png pred_1prod10.png -tile 3x1 -geometry +0+0 pred.png
